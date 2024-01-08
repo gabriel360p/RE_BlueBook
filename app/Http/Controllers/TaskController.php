@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subtask;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -12,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.create');
+        return view('tasks.index');
     }
 
     /**
@@ -20,7 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -28,7 +30,30 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = Task::create([
+            'task' => $request->input('task'),
+            'date' => $request->input('date'),
+            'categorie_id' => $request->input('categorie_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        try {
+            $subtasks = $request->subtask;
+            if (sizeof($subtasks) != 0) {
+                for ($i = 0; $i < sizeof($subtasks); $i++) {
+                    Subtask::create([
+                        'subtask' => $subtasks[$i],
+                        'task_id' => $task->id,
+                        'user_id' => Auth::user()->id,
+                    ]);
+                }
+            }
+            return back();
+        } catch (\Throwable $th) {
+            return back()->withErrors($th);
+        }
+
+        return back();
     }
 
     /**

@@ -41,13 +41,13 @@
     <!-- [ Header Topbar ] start -->
     <header class="pc-header">
         <div class="m-header">
-            <a href="index.html" class="b-brand">
+            <a href="{{route('dashboard')}}" class="b-brand">
                 <!-- ========   change your logo hear   ============ -->
                 <img src="../assets/images/logo-dark.svg" alt="" class="logo logo-lg" />
             </a>
             <!-- ======= Menu collapse Icon ===== -->
             <div class="pc-h-item">
-                <a href="#" class="pc-head-link head-link-secondary m-0" id="sidebar-hide">
+                <a href="" class="pc-head-link head-link-secondary m-0" id="sidebar-hide">
                     <i class="ti ti-menu-2"></i>
                 </a>
             </div>

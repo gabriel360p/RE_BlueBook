@@ -1,19 +1,8 @@
 <div>
     <div class="d-flex justify-content-center align-items-center">
-
-        {{-- <div class="card w-50 d-flex align-items-center justify-content-center" style="height:130px">
-                <div class="text-center">
-                    <h1 style="font-size: 25px">Nenhuma categoria foi encontrada</h1>
-                </div>
-                <div class="text-center">
-                    <a href="{{ route('categories.create') }}" class="btn btn-primary">Adicionar</a>
-                </div>
-            </div> --}}
-
-
         <div class="card w-100">
             <div class="text-center p-4">
-                <h1 style="font-size: 25px">Categorias</h1>
+                <h1 style="font-size: 25px">Todas as Categorias</h1>
             </div>
             <div class="row px-3 mb-2">
                 <div class="col-8">
@@ -83,8 +72,7 @@
                                                         <button data-bs-dismiss="modal" aria-label="Close"
                                                             type="submit" class="btn btn-primary">Editar</button>
                                                         </form>
-                                                        <form
-                                                            action="{{ route('categories.destroy', $categorie->id) }}"
+                                                        <form action="{{ route('categories.destroy', $categorie->id) }}"
                                                             method="post">
                                                             @csrf
                                                             <button data-bs-dismiss="modal" aria-label="Close"
@@ -110,10 +98,6 @@
         @endif
 
     </div>
-
 </div>
 
 {{ $categories->links() }}
-
-
-</div>

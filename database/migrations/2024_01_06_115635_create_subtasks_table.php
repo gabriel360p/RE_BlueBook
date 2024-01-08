@@ -11,24 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('subtasks', function (Blueprint $table) {
             $table->id();
-            $table->text('task');
-
+            $table->text("subtask")->nullable();
+            $table->unsignedBigInteger('task_id');
             $table->boolean('completed')->default(false);
-
-            $table->datetime('date')->nullable();
-
-            $table->unsignedBigInteger('categorie_id')->nullable();
-            $table->foreign('categorie_id')->references('id')->on('categories');
-
+            $table->foreign('task_id')->references('id')->on('tasks');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
             // $table->unsignedBigInteger('book_id')->nullable();
             // $table->foreign('book_id')->references('id')->on('books');
-
-
             $table->timestamps();
         });
     }
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('subtasks');
     }
 };

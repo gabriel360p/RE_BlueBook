@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(TaskController::class)->group(function () {
         Route::get('/tasks/index', 'index')->name('tasks.index');
+        Route::post('/tasks/store', 'store')->name('tasks.store');
         Route::get('/tasks/create', 'create')->name('tasks.create');
         // Route::post('/tasks/update/{categorie}', 'update')->name('tasks.update');
         // Route::post('/tasks/destroy/{categorie}', 'destroy')->name('tasks.destroy');
