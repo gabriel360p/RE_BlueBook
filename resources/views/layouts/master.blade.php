@@ -296,12 +296,12 @@
                     </li>
 
                     <li class="pc-item pc-caption">
-                        <label>Livros</label>
+                        <label>Cadernos</label>
                         <i class="ti t  i-news"></i>
                     </li>
                     <li class="pc-item pc-hasmenu">
                         <a href="#!" class="pc-link"><span class="pc-micon"><i
-                                    class="ti ti-book"></i></span><span class="pc-mtext">Livros</span><span
+                                    class="ti ti-book"></i></span><span class="pc-mtext">Cadernos</span><span
                                 class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
 
                         <ul class="pc-submenu">
