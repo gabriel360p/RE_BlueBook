@@ -20,21 +20,26 @@
                 <div>
                     <div class=" m-3 d-flex align-items-center -content-center">
                         <div style="margin-right: 20px; display:flex; flex-direction:column;">
-                            <i class="ti ti-check mt-2"></i>
-                            <i class="ti ti-trash mt-2"></i>
-                            <i class="ti ti-pencil mt-2"></i>
+                            <button>
+                                <i class="ti ti-check mt-2" wire:click="check({{ $task }})"></i>
+                            </button>
+                            <i class="ti ti-trash mt-2" wire:click="delete{{ $task }}"></i>
+                            <i class="ti ti-pencil mt-2" wire:click="edit{{ $task }}"></i>
                         </div>
                         <div>
                             <textarea cols="200" class="form-control">{{ $task->task }}</textarea>
                         </div>
                     </div>
                     <div>
+
                         <p class="d-inline-flex gap-1">
-                            <button class="btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#task-id-subtasks" aria-expanded="false"
-                                aria-controls="task-id-subtasks">
-                                <i class="ti ti-arrow-narrow-down"></i>Subtarefas
-                            </button>
+                            @if (sizeof($task->subtasks) != 0)
+                                <button class="btn" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#task-id-subtasks" aria-expanded="false"
+                                    aria-controls="task-id-subtasks">
+                                    <i class="ti ti-arrow-narrow-down"></i>Subtarefas
+                                </button>
+                            @endif
 
                             {{-- ------------------------------------------------------------------------------------------ --}}
 
@@ -66,28 +71,31 @@
                                 </div>
                             </div>
                         </div>
+
                         {{-- ------------------------------------------------------------------------------------------ --}}
                         </p>
 
-                        {{-- ------------------------------------------------------------------------------------------ --}}
-                        {{-- Listagem de subtarefas --}}
-                        <div class="collapse" id="task-id-subtasks">
-                            @foreach ($task->subtasks as $subtask)
-                                <div class="card card-body">
-                                    <div class=" m-3 d-flex align-items-center -content-center">
-                                        <div style="margin-right: 20px; display:flex; flex-direction:column;">
-                                            <i class="ti ti-check mt-2"></i>
-                                            <i class="ti ti-trash mt-2"></i>
-                                            <i class="ti ti-pencil mt-2"></i>
-                                        </div>
-                                        <div>
-                                            <textarea cols="200" class="form-control">{{ $subtask->subtask }}</textarea>
+                        @if (sizeof($task->subtasks) != 0)
+                            {{-- ------------------------------------------------------------------------------------------ --}}
+                            {{-- Listagem de subtarefas --}}
+                            <div class="collapse" id="task-id-subtasks">
+                                @foreach ($task->subtasks as $subtask)
+                                    <div class="card card-body">
+                                        <div class=" m-3 d-flex align-items-center -content-center">
+                                            <div style="margin-right: 20px; display:flex; flex-direction:column;">
+                                                <i class="ti ti-check mt-2"></i>
+                                                <i class="ti ti-trash mt-2"></i>
+                                                <i class="ti ti-pencil mt-2"></i>
+                                            </div>
+                                            <div>
+                                                <textarea cols="200" class="form-control">{{ $subtask->subtask }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        {{-- ------------------------------------------------------------------------------------------ --}}
+                                @endforeach
+                            </div>
+                            {{-- ------------------------------------------------------------------------------------------ --}}
+                        @endif
 
                     </div>
                 </div>

@@ -11,6 +11,10 @@ class Tasks extends Component
 {
     public $filter_categorie = null;
 
+    public function check (Task $task){
+        dd($task);
+    }
+
     public function render()
     {
         // $subtasks = Task::first()->with(['subtasks','categorie'])->get();
