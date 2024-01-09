@@ -50,9 +50,21 @@
 
                                 <div class="col-6">
                                     <select name="categorie" class="form-control" id="">
-                                        <option value="{{ $task->categorie->id }}" selected>
-                                            {{ $task->categorie->name }}
-                                        </option>
+                                        @php
+                                            try {
+                                                $current_categorie = $task->categorie;
+                                            } catch (\ErrorException $th) {
+                                                $current_categorie = null;
+                                            }
+                                        @endphp
+
+                                        @if ($current_categorie != null)
+                                            <option disabled value="{{ $task->categorie->id }}" selected>
+                                                {{ $task->categorie->name }}
+                                            </option>
+                                        @else
+                                        @endif
+
                                         @foreach (\App\Models\Categorie::where('user_id', Auth::user()->id)->get() as $categorie)
                                             <option value="{{ $categorie->id }}">
                                                 {{ $categorie->name }}
