@@ -69,7 +69,12 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->update([
+            'task' => $request->input('task'),
+            'date' => $request->input('date'),
+            'categorie_id' => $request->input('categorie'),
+        ]);
+        return back();
     }
 
     /**

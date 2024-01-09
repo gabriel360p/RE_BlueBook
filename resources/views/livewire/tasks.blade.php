@@ -20,15 +20,47 @@
                 <div>
                     <div class=" m-3 d-flex align-items-center -content-center">
                         <div style="margin-right: 20px; display:flex; flex-direction:column;">
-                            <button>
-                                <i class="ti ti-check mt-2" wire:click="check({{ $task }})"></i>
+                            @if ($task->completed)
+                                <button class="btn" wire:click="uncheck({{ $task }})">
+                                    <i class="ti ti-checks mt-2"></i>
+                                </button>
+                            @else
+                                <button class="btn" wire:click="check({{ $task }})">
+                                    <i class="ti ti-check mt-2"></i>
+                                </button>
+                            @endif
+                            <button class="btn" wire:click="delete({{ $task }})">
+                                <i class="ti ti-trash mt-2"></i>
                             </button>
-                            <i class="ti ti-trash mt-2" wire:click="delete{{ $task }}"></i>
-                            <i class="ti ti-pencil mt-2" wire:click="edit{{ $task }}"></i>
+                            <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+                                @csrf
+                                <button class="btn">
+                                    <i class="ti ti-pencil mt-2"></i>
+                                </button>
                         </div>
                         <div>
-                            <textarea cols="200" class="form-control">{{ $task->task }}</textarea>
+                            <textarea cols="200" rows="3" class="form-control" name="task">{{ $task->task }}</textarea>
+                            <div class="mt-2 row">
+                                <div class="col-6">
+                                    <input type="datetime-local" value="{{ $task->date }}" name="date"
+                                        class="form-control">
+                                </div>
+
+                                <div class="col-6">
+                                    <select name="categorie" class="form-control" id="">
+                                        <option value="{{ $task->categorie->id }}" selected>
+                                            {{ $task->categorie->name }}
+                                        </option>
+                                        @foreach (\App\Models\Categorie::where('user_id', Auth::user()->id)->get() as $categorie)
+                                            <option value="{{ $categorie->id }}">
+                                                {{ $categorie->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+                        </form>
                     </div>
                     <div>
 
@@ -97,17 +129,6 @@
                             {{-- ------------------------------------------------------------------------------------------ --}}
                         @endif
 
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-
-                        <div class="col-4">
-                            <input type="datetime-local" value="{{ $task->date }}" class="form-control">
-                        </div>
-                        <div class="col-4">
-                            <span>{{ $task->categorie->name }}</span>
-                        </div>
                     </div>
                 </div>
 
