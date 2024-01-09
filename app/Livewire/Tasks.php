@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Categorie;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -12,6 +13,12 @@ class Tasks extends Component
 
     public function render()
     {
-        return view('livewire.tasks', ['categories' => Categorie::where('user_id', Auth::user()->id,)->get()]);
+        // $subtasks = Task::where('user_id', Auth::user()->id)->with('subtasks')->get();
+        // dd($subtasks);
+
+        return view('livewire.tasks', [
+            'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
+            'tasks' => Task::where('user_id', Auth::user()->id)->with('subtasks')->get(),
+        ]);
     }
 }
