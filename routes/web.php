@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::controller(CategorieController::class)->group(function () {
+        Route::get('/categories', 'index')->name('categories.index');
         Route::get('/categories/index', 'index')->name('categories.index');
         Route::get('/categories/create', 'create')->name('categories.create');
         Route::post('/categories/update/{categorie}', 'update')->name('categories.update');
@@ -44,11 +45,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::controller(TaskController::class)->group(function () {
+        Route::get('/tasks', 'index')->name('tasks.index');
         Route::get('/tasks/index', 'index')->name('tasks.index');
         Route::post('/tasks/store', 'store')->name('tasks.store');
         Route::get('/tasks/create', 'create')->name('tasks.create');
-        Route::post('/tasks/update/{task}', 'update')->name('tasks.update'); 
-        // Route::post('/subtasks/update/{task}', 'update')->name('subtasks.update'); 
+        Route::post('/tasks/update/{task}', 'update')->name('tasks.update');
+        Route::post('/subtasks/update/{subtask}', 'update_subtask')->name('subtasks.update');
+        Route::post('/subtasks/store/{task}', 'store_subtask')->name('subtasks.store');
         // Route::post('/tasks/update/{categorie}', 'update')->name('tasks.update');
         // Route::post('/tasks/destroy/{categorie}', 'destroy')->name('tasks.destroy');
     });

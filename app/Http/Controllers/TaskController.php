@@ -77,6 +77,25 @@ class TaskController extends Controller
         return back();
     }
 
+    public function update_subtask(Request $request, Subtask $subtask)
+    {
+        $subtask->update([
+            'subtask' => $request->input('subtask'),
+        ]);
+        return back();
+    }
+
+    public function store_subtask(Request $request, Task $task)
+    {
+        Subtask::create([
+            'subtask' => $request->input('subtask'),
+            'task_id' => $task->id,
+            'user_id' => Auth::user()->id
+        ]);
+        return back();
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */

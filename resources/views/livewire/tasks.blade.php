@@ -7,9 +7,9 @@
                 </div>
 
                 <div class="m-3 text-center text-md-start" id="control-buttons">
-                    <button class="btn">Todos</button>
-                    <button class="btn">Concluídos</button>
-                    <button class="btn">Não concluídos</button>
+                    <button class="btn" wire:click="set_filter({{ 0 }})">Todos</button>
+                    <button class="btn" wire:click="set_filter({{ 1 }})">Concluídos</button>
+                    <button class="btn" wire:click="set_filter({{ 2 }})">Não Concluídos</button>
                 </div>
 
             </div>
@@ -21,11 +21,13 @@
                     <div class=" m-3 d-flex align-items-center -content-center">
                         <div style="margin-right: 20px; display:flex; flex-direction:column;">
                             @if ($task->completed)
-                                <button class="btn" wire:click="uncheck({{ $task }})">
+                                <button class="btn" wire:click="uncheck({{ $task }})"
+                                    style="color: red; border:none;" title="Desmarcar como concluído">
                                     <i class="ti ti-checks mt-2"></i>
                                 </button>
                             @else
-                                <button class="btn" wire:click="check({{ $task }})">
+                                <button class="btn" wire:click="check({{ $task }})"
+                                    style="color: green; border:none;" title="Marcar como concluído">
                                     <i class="ti ti-check mt-2"></i>
                                 </button>
                             @endif
@@ -89,16 +91,18 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form method="POST" action="{{ route('subtasks.store', $task->id) }}">
+                                            @csrf
                                             <div class="mb-3">
-                                                <textarea class="form-control" id="message-text"></textarea>
+                                                <textarea class="form-control" id="message-text" name="subtask"></textarea>
                                             </div>
-                                        </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                        <button type="button" class="btn btn-primary">Salvar</button>
+                                        <button data-bs-dismiss="modal" type="submit"
+                                            class="btn btn-primary">Salvar</button>
+                                        </form>
+                                        <a style="color:white;" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</a>
                                     </div>
                                 </div>
                             </div>
@@ -115,13 +119,32 @@
                                     <div class="card card-body">
                                         <div class=" m-3 d-flex align-items-center -content-center">
                                             <div style="margin-right: 20px; display:flex; flex-direction:column;">
-                                                <i class="ti ti-check mt-2"></i>
-                                                <i class="ti ti-trash mt-2"></i>
-                                                <i class="ti ti-pencil mt-2"></i>
+                                                @if ($subtask->completed)
+                                                    <button class="btn" style="color: red; border:none;"
+                                                        wire:click="uncheck_subtask({{ $subtask }})">
+                                                        <i class="ti ti-checks mt-2"></i>
+                                                    </button>
+                                                @else
+                                                    <button class="btn" style="color: green; border:none;"
+                                                        wire:click="check_subtask({{ $subtask }})">
+                                                        <i class="ti ti-check mt-2"></i>
+                                                    </button>
+                                                @endif
+                                                <button class="btn"
+                                                    wire:click="delete_subtask({{ $subtask }})">
+                                                    <i class="ti ti-trash mt-2"></i>
+                                                </button>
+                                                <form action="{{ route('subtasks.update', $subtask->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button class="btn">
+                                                        <i class="ti ti-pencil mt-2"></i>
+                                                    </button>
                                             </div>
                                             <div>
-                                                <textarea cols="200" class="form-control">{{ $subtask->subtask }}</textarea>
+                                                <textarea cols="200" rows="3" class="form-control" name="subtask">{{ $subtask->subtask }}</textarea>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 @endforeach

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Categorie;
+use App\Models\Subtask;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -10,7 +11,29 @@ use Livewire\Component;
 class Tasks extends Component
 {
     public $filter_categorie = null;
-    public $edit_task;
+    public $filter_completed = 0;
+
+    public function set_filter($filter)
+    {
+        $this->filter_completed = $filter;
+    }
+
+    public function uncheck_subtask(Subtask $subtask)
+    {
+        $subtask->completed = false;
+        $subtask->save();
+    }
+
+    public function check_subtask(Subtask $subtask)
+    {
+        $subtask->completed = true;
+        $subtask->save();
+    }
+
+    public function delete_subtask(Subtask $subtask)
+    {
+        $subtask->delete();
+    }
 
     public function uncheck(Task $task)
     {
@@ -51,10 +74,21 @@ class Tasks extends Component
     {
         // $subtasks = Task::first()->with(['subtasks','categorie'])->get();
         // dd($subtasks);
-
-        return view('livewire.tasks', [
-            'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
-            'tasks' => Task::where('user_id', Auth::user()->id)->with(['subtasks', 'categorie'])->get(),
-        ]);
+        if ($this->filter_completed == 0) {
+            return view('livewire.tasks', [
+                'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
+                'tasks' => Task::where('user_id', Auth::user()->id)->with(['subtasks', 'categorie'])->get(),
+            ]);
+        } else if ($this->filter_completed == 1) {
+            return view('livewire.tasks', [
+                'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
+                'tasks' => Task::where('user_id', Auth::user()->id)->where('completed', 1)->with(['subtasks', 'categorie'])->get(),
+            ]);
+        } else if ($this->filter_completed == 2) {
+            return view('livewire.tasks', [
+                'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
+                'tasks' => Task::where('user_id', Auth::user()->id)->where('completed', 0)->with(['subtasks', 'categorie'])->get(),
+            ]);
+        }
     }
 }
