@@ -72,7 +72,7 @@
                         {{-- ------------------------------------------------------------------------------------------ --}}
                         {{-- Listagem de subtarefas --}}
                         <div class="collapse" id="task-id-subtasks">
-                            @foreach ($tasks->subtasks as $subtask)
+                            @foreach ($task->subtasks as $subtask)
                                 <div class="card card-body">
                                     <div class=" m-3 d-flex align-items-center -content-center">
                                         <div style="margin-right: 20px; display:flex; flex-direction:column;">
@@ -81,7 +81,7 @@
                                             <i class="ti ti-pencil mt-2"></i>
                                         </div>
                                         <div>
-                                            <textarea cols="200" class="form-control">{{$subtask}}</textarea>
+                                            <textarea cols="200" class="form-control">{{ $subtask->subtask }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -95,13 +95,10 @@
                     <div class="row">
 
                         <div class="col-4">
-                            <input type="datetime-local" class="form-control">
+                            <input type="datetime-local" value="{{ $task->date }}" class="form-control">
                         </div>
                         <div class="col-4">
-                            <span>hora da criação</span>
-                        </div>
-                        <div class="col-4">
-                            <span>hora da edição</span>
+                            <span>{{ $task->categorie->name }}</span>
                         </div>
                     </div>
                 </div>

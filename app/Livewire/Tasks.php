@@ -13,12 +13,12 @@ class Tasks extends Component
 
     public function render()
     {
-        // $subtasks = Task::where('user_id', Auth::user()->id)->with('subtasks')->get();
+        // $subtasks = Task::first()->with(['subtasks','categorie'])->get();
         // dd($subtasks);
 
         return view('livewire.tasks', [
             'categories' => Categorie::where('user_id', Auth::user()->id)->get(),
-            'tasks' => Task::where('user_id', Auth::user()->id)->with('subtasks')->get(),
+            'tasks' => Task::where('user_id', Auth::user()->id)->with(['subtasks','categorie'])->get(),
         ]);
     }
 }

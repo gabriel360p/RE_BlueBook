@@ -14,8 +14,6 @@ class Task extends Model
         'date',
         'categorie_id',
         'user_id',
-        // 'book_id',
-
     ];
 
     public function user()
@@ -30,7 +28,6 @@ class Task extends Model
 
     public function subtasks()
     {
-        return $this->belongsToMany(Subtask::class);
-
+        return $this->hasMany(Subtask::class);
     }
 }

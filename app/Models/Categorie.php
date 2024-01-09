@@ -13,4 +13,15 @@ class Categorie extends Model
         'name',
         'user_id',
     ];
+
+
+    public function task()
+    {
+        return $this->hasOne(Task::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -33,7 +33,7 @@ class TaskController extends Controller
         $task = Task::create([
             'task' => $request->input('task'),
             'date' => $request->input('date'),
-            'categorie_id' => $request->input('categorie_id'),
+            'categorie_id' => $request->input('categorie'),
             'user_id' => Auth::user()->id,
         ]);
 
@@ -50,7 +50,7 @@ class TaskController extends Controller
             }
             return back();
         } catch (\Throwable $th) {
-            return back()->withErrors($th);
+            return back();
         }
 
         return back();
