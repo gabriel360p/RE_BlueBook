@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreign('task_id')->references('id')->on('tasks');
 
 
-            // $table->unsignedBigInteger('book_id')->nullable();
-            // $table->foreign('book_id')->references('id')->on('books');
+            $table->unsignedBigInteger('book_id')->nullable();
+            $table->foreign('book_id')->references('id')->on('books');
             $table->timestamps();
         });
 
