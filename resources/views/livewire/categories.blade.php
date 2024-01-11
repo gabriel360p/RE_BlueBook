@@ -101,3 +101,4 @@
 </div>
 
 {{ $categories->links() }}
+</div>
