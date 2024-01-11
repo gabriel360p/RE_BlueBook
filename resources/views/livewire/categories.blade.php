@@ -9,7 +9,7 @@
                     <input type="text" wire:model.live="query" placeholder="Buscar categoria" class="form-control">
                 </div>
                 <div class="col-4">
-                    <a href="{{ route('categories.create') }}" class="btn btn-primary">
+                    <a href="{{ route('categories.create') }}" style="border: none" class="btn">
                         <i class="ti ti-plus"></i>
                     </a>
                 </div>
